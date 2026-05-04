@@ -14,16 +14,375 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      apartment_images: {
+        Row: {
+          alt: string | null
+          apartment_id: string
+          created_at: string
+          id: string
+          is_cover: boolean
+          sort_order: number
+          storage_path: string
+          url: string
+        }
+        Insert: {
+          alt?: string | null
+          apartment_id: string
+          created_at?: string
+          id?: string
+          is_cover?: boolean
+          sort_order?: number
+          storage_path: string
+          url: string
+        }
+        Update: {
+          alt?: string | null
+          apartment_id?: string
+          created_at?: string
+          id?: string
+          is_cover?: boolean
+          sort_order?: number
+          storage_path?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "apartment_images_apartment_id_fkey"
+            columns: ["apartment_id"]
+            isOneToOne: false
+            referencedRelation: "apartments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      apartments: {
+        Row: {
+          address: string | null
+          amenities: string[]
+          area_sqm: number | null
+          bathrooms: number
+          bedrooms: number
+          city: string
+          created_at: string
+          description: string
+          id: string
+          is_available: boolean
+          is_featured: boolean
+          latitude: number | null
+          longitude: number | null
+          max_guests: number
+          neighborhood: string
+          price_per_night: number
+          rating: number
+          review_count: number
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          amenities?: string[]
+          area_sqm?: number | null
+          bathrooms?: number
+          bedrooms?: number
+          city?: string
+          created_at?: string
+          description?: string
+          id?: string
+          is_available?: boolean
+          is_featured?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          max_guests?: number
+          neighborhood: string
+          price_per_night: number
+          rating?: number
+          review_count?: number
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          amenities?: string[]
+          area_sqm?: number | null
+          bathrooms?: number
+          bedrooms?: number
+          city?: string
+          created_at?: string
+          description?: string
+          id?: string
+          is_available?: boolean
+          is_featured?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          max_guests?: number
+          neighborhood?: string
+          price_per_night?: number
+          rating?: number
+          review_count?: number
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          apartment_id: string
+          check_in: string
+          check_out: string
+          created_at: string
+          guest_email: string | null
+          guest_name: string | null
+          guest_phone: string | null
+          guests: number
+          id: string
+          nights: number
+          payment_method: string | null
+          status: Database["public"]["Enums"]["booking_status"]
+          total_price: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          apartment_id: string
+          check_in: string
+          check_out: string
+          created_at?: string
+          guest_email?: string | null
+          guest_name?: string | null
+          guest_phone?: string | null
+          guests?: number
+          id?: string
+          nights: number
+          payment_method?: string | null
+          status?: Database["public"]["Enums"]["booking_status"]
+          total_price: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          apartment_id?: string
+          check_in?: string
+          check_out?: string
+          created_at?: string
+          guest_email?: string | null
+          guest_name?: string | null
+          guest_phone?: string | null
+          guests?: number
+          id?: string
+          nights?: number
+          payment_method?: string | null
+          status?: Database["public"]["Enums"]["booking_status"]
+          total_price?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_apartment_id_fkey"
+            columns: ["apartment_id"]
+            isOneToOne: false
+            referencedRelation: "apartments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      favorites: {
+        Row: {
+          apartment_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          apartment_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          apartment_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_apartment_id_fkey"
+            columns: ["apartment_id"]
+            isOneToOne: false
+            referencedRelation: "apartments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          is_from_admin: boolean
+          read: boolean
+          subject: string | null
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          is_from_admin?: boolean
+          read?: boolean
+          subject?: string | null
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          is_from_admin?: boolean
+          read?: boolean
+          subject?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          apartment_id: string | null
+          author_name: string | null
+          comment: string
+          created_at: string
+          id: string
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          apartment_id?: string | null
+          author_name?: string | null
+          comment: string
+          created_at?: string
+          id?: string
+          rating: number
+          user_id: string
+        }
+        Update: {
+          apartment_id?: string | null
+          author_name?: string | null
+          comment?: string
+          created_at?: string
+          id?: string
+          rating?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_apartment_id_fkey"
+            columns: ["apartment_id"]
+            isOneToOne: false
+            referencedRelation: "apartments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_images: {
+        Row: {
+          alt: string | null
+          caption: string | null
+          created_at: string
+          id: string
+          key: string
+          storage_path: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          alt?: string | null
+          caption?: string | null
+          created_at?: string
+          id?: string
+          key: string
+          storage_path: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          alt?: string | null
+          caption?: string | null
+          created_at?: string
+          id?: string
+          key?: string
+          storage_path?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      booking_status: "pending" | "confirmed" | "cancelled" | "completed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +509,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      booking_status: ["pending", "confirmed", "cancelled", "completed"],
+    },
   },
 } as const
