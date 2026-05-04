@@ -283,7 +283,7 @@ export type Database = {
           created_at: string
           id: string
           rating: number
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           apartment_id?: string | null
@@ -292,7 +292,7 @@ export type Database = {
           created_at?: string
           id?: string
           rating: number
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           apartment_id?: string | null
@@ -301,7 +301,7 @@ export type Database = {
           created_at?: string
           id?: string
           rating?: number
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {
