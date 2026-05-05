@@ -22,7 +22,7 @@ type Booking = {
 };
 
 function DashboardPage() {
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("bookings");
   const [bookings, setBookings] = useState<Booking[]>([]);
