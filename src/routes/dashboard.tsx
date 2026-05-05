@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Calendar, Heart, MessageSquare, User, Home } from "lucide-react";
+import { Calendar, Heart, MessageSquare, User, Home, Shield } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,7 +22,7 @@ type Booking = {
 };
 
 function DashboardPage() {
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("bookings");
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -70,7 +70,21 @@ function DashboardPage() {
     <PageShell>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="grid lg:grid-cols-[260px_1fr] gap-8">
-          <aside>
+          <aside className="space-y-4">
+            {isAdmin && (
+              <Link to="/admin"
+                className="block rounded-2xl p-4 bg-sidebar text-sidebar-foreground shadow-elegant hover-lift">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-secondary/20 grid place-items-center">
+                    <Shield className="h-5 w-5 text-secondary" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs uppercase tracking-wider text-sidebar-foreground/60">Admin</div>
+                    <div className="text-sm font-semibold truncate">Switch to admin</div>
+                  </div>
+                </div>
+              </Link>
+            )}
             <div className="rounded-2xl bg-card border border-border shadow-soft p-2">
               {tabs.map((t) => (
                 <button key={t.id} onClick={() => setTab(t.id)}
