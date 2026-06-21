@@ -57,7 +57,7 @@ export function Chatbot() {
     }));
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
