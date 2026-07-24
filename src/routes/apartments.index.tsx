@@ -145,7 +145,7 @@ function ListingPage() {
               </div>
 
               <button
-                onClick={() => { setMaxPrice(100000); setMinRooms(0); setPicked([]); setNeighborhood(""); }}
+                onClick={() => { setMaxPrice(150000); setMinRooms(0); setPicked([]); setRoomType(""); }}
                 className="w-full text-xs font-medium text-muted-foreground hover:text-foreground"
               >
                 Clear all filters
