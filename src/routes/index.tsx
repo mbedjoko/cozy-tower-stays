@@ -29,7 +29,7 @@ function HomePage() {
   const [hero, setHero] = useState<{ url: string; caption: string | null } | null>(null);
 
   // search form
-  const [location, setLocation] = useState("");
+  const [roomType, setRoomType] = useState("");
   const [checkIn, setCheckIn] = useState(todayISO(1));
   const [checkOut, setCheckOut] = useState(todayISO(3));
   const [guests, setGuests] = useState(2);
