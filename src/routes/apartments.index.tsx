@@ -96,10 +96,15 @@ function ListingPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Neighborhood</label>
-                <input value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}
-                  placeholder="Akwa, Bonapriso…"
-                  className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Room type</label>
+                <select value={roomType} onChange={(e) => setRoomType(e.target.value)}
+                  className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                  <option value="">All packages</option>
+                  <option value="Studio">Studio</option>
+                  <option value="1-Bedroom">1-Bedroom</option>
+                  <option value="2-Bedroom">2-Bedroom</option>
+                  <option value="3-Bedroom">3-Bedroom</option>
+                </select>
               </div>
 
               <div>
