@@ -12,9 +12,9 @@ export const Route = createFileRoute("/apartments/$slug")({
   head: ({ params }) => ({
     meta: [
       { title: `${decodeURIComponent(params.slug).replace(/-/g, " ")} — Cozy Tower` },
-      { name: "description", content: "Premium apartment stay in Douala. Book instantly on Cozy Tower." },
+      { name: "description", content: "A room package at Cozy Tower, Deido, Bonatéki, Douala — book directly with the residence." },
       { property: "og:title", content: `${decodeURIComponent(params.slug).replace(/-/g, " ")} — Cozy Tower` },
-      { property: "og:description", content: "Premium apartment stay in Douala." },
+      { property: "og:description", content: "One residence, Deido, Bonatéki, Douala." },
     ],
   }),
   component: DetailPage,

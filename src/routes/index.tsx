@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search, Calendar, Users, Star, Shield, Sparkles, Headphones, ArrowRight, BedDouble } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
+import { FacebookReviews } from "@/components/FacebookReviews";
 import { ApartmentCard, type ApartmentCardData } from "@/components/ApartmentCard";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,10 +12,10 @@ import { todayISO } from "@/lib/format";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Cozy Tower — Premium apartments in Douala" },
-      { name: "description", content: "Find your perfect short-stay apartment in Douala. Curated luxury, instant booking, mobile money supported." },
-      { property: "og:title", content: "Cozy Tower — Premium apartments in Douala" },
-      { property: "og:description", content: "Find your perfect stay in Douala. Curated, secure, and effortless." },
+      { title: "Cozy Tower — Deido, Bonatéki, Douala" },
+      { name: "description", content: "A single boutique residence in Deido, Bonatéki. Book a room package directly — no marketplace, no middleman. Mobile Money accepted." },
+      { property: "og:title", content: "Cozy Tower — Deido, Bonatéki, Douala" },
+      { property: "og:description", content: "One building, a handful of room packages, booked directly." },
     ],
   }),
   component: HomePage,
@@ -38,7 +39,7 @@ function HomePage() {
     (async () => {
       const { data: apts } = await supabase
         .from("apartments")
-        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, apartment_images(url, is_cover, sort_order)")
+        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, bathrooms, apartment_images(url, is_cover, sort_order)")
         .eq("is_featured", true)
         .limit(6);
       if (apts) {
@@ -48,7 +49,7 @@ function HomePage() {
             return {
               id: a.id, slug: a.slug, title: a.title, neighborhood: a.neighborhood,
               price_per_night: a.price_per_night, rating: Number(a.rating), review_count: a.review_count,
-              is_available: a.is_available, bedrooms: a.bedrooms,
+              is_available: a.is_available, bedrooms: a.bedrooms, bathrooms: a.bathrooms,
               cover_url: imgs[0]?.url ?? "",
             };
           })
@@ -88,14 +89,14 @@ function HomePage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-white/90 text-xs font-medium mb-6">
               <Sparkles className="h-3.5 w-3.5 text-accent" />
-              Curated luxury stays in Douala
+              One building. Deido, Bonatéki.
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.05] tracking-tight">
-              Find your perfect <br className="hidden md:block" />
-              <span className="text-accent">stay</span> in Douala.
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-semibold text-white leading-[1.05] tracking-tight">
+              A room of your own <br className="hidden md:block" />
+              in <span className="text-accent">Bonatéki</span>.
             </h1>
             <p className="mt-5 text-lg text-white/80 max-w-xl">
-              A single premium residence in Deido, Bonatéki — with room packages from cozy studios to spacious 3-bedroom family suites. Book in minutes, settle in within hours.
+              Cozy Tower is one residence, not a marketplace — every room package is furnished and cared for in-house. Book directly, settle in within hours.
             </p>
           </div>
 
@@ -135,9 +136,9 @@ function HomePage() {
           </form>
 
           <div className="mt-8 flex flex-wrap gap-6 text-white/80 text-sm">
-            <Stat value="500+" label="Verified stays" />
-            <Stat value="4.9" label="Average rating" />
-            <Stat value="24/7" label="Local support" />
+            <Stat value="1" label="Residence, fully ours" />
+            <Stat value="MoMo" label="+ Orange Money accepted" />
+            <Stat value="Direct" label="No marketplace fees" />
           </div>
         </div>
       </section>
@@ -146,11 +147,11 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <p className="text-sm font-semibold text-secondary uppercase tracking-wider">Featured</p>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold">Handpicked for you</h2>
+            <p className="text-sm font-semibold text-secondary uppercase tracking-wider">Room packages</p>
+            <h2 className="mt-2 text-3xl md:text-4xl font-display font-semibold">Same building, different rooms</h2>
           </div>
           <Link to="/apartments" className="hidden md:inline-flex items-center gap-1 text-sm font-medium text-foreground hover:text-secondary transition-base">
-            View all <ArrowRight className="h-4 w-4" />
+            Compare all <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -162,9 +163,9 @@ function HomePage() {
       <section className="bg-surface border-y border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-3 gap-8">
           {[
-            { icon: Shield, title: "Verified hosts", desc: "Every apartment is personally inspected. No surprises." },
-            { icon: Sparkles, title: "Premium standard", desc: "Designer interiors, fast wifi, full kitchens, AC." },
-            { icon: Headphones, title: "24/7 local support", desc: "A real human responds in minutes, not hours." },
+            { icon: Shield, title: "We own it, we run it", desc: "No third-party host — the same team furnishes, cleans and manages every room." },
+            { icon: Sparkles, title: "Built for Douala power cuts", desc: "Backup power and a water reserve on every floor, so a dry spell or SONEL outage doesn't ruin your stay." },
+            { icon: Headphones, title: "A person, not a queue", desc: "Message the concierge directly — it's the person who'll hand you your keys." },
           ].map((f) => (
             <div key={f.title} className="rounded-2xl p-6 bg-card shadow-soft hover-lift">
               <div className="h-12 w-12 rounded-xl gradient-cta grid place-items-center text-secondary-foreground mb-4">
@@ -180,19 +181,28 @@ function HomePage() {
       {/* REVIEWS */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-sm font-semibold text-secondary uppercase tracking-wider">Loved by guests</p>
-          <h2 className="mt-2 text-3xl md:text-4xl font-bold">Real stays, real reviews</h2>
+          <p className="text-sm font-semibold text-secondary uppercase tracking-wider">Guest notes</p>
+          <h2 className="mt-2 text-3xl md:text-4xl font-display font-semibold">What people say after they leave</h2>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((r) => (
-            <div key={r.id} className="rounded-2xl bg-card p-6 shadow-soft border border-border">
-              <div className="flex gap-0.5 mb-3">
-                {Array.from({ length: r.rating }).map((_, i) => <Star key={i} className="h-4 w-4 fill-accent text-accent" />)}
+        {reviews.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reviews.map((r) => (
+              <div key={r.id} className="rounded-2xl bg-card p-6 shadow-soft border border-border">
+                <div className="flex gap-0.5 mb-3">
+                  {Array.from({ length: r.rating }).map((_, i) => <Star key={i} className="h-4 w-4 fill-accent text-accent" />)}
+                </div>
+                <p className="text-foreground/90 leading-relaxed">"{r.comment}"</p>
+                <p className="mt-4 text-sm text-muted-foreground font-medium">— {r.author_name}</p>
               </div>
-              <p className="text-foreground/90 leading-relaxed">"{r.comment}"</p>
-              <p className="mt-4 text-sm text-muted-foreground font-medium">— {r.author_name}</p>
-            </div>
-          ))}
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-muted-foreground text-sm">No guest notes posted here yet — see what people say on Facebook below.</p>
+        )}
+
+        <div className="mt-16">
+          <p className="text-center text-sm font-semibold text-secondary uppercase tracking-wider mb-6">Also on Facebook</p>
+          <FacebookReviews />
         </div>
       </section>
 
@@ -202,12 +212,12 @@ function HomePage() {
           <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-secondary/20 blur-3xl" />
           <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
           <div className="relative">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Ready to feel at home in Douala?</h2>
-            <p className="mt-4 text-white/80 max-w-xl mx-auto">Join thousands of travellers who trust Cozy Tower for their stays.</p>
+            <h2 className="text-3xl md:text-5xl font-display font-semibold tracking-tight">Ready to see the rooms?</h2>
+            <p className="mt-4 text-white/80 max-w-xl mx-auto">Compare every package in the building and book straight with us — no marketplace fee added to your total.</p>
             <div className="mt-8 flex flex-wrap gap-3 justify-center">
               <Link to="/apartments">
                 <Button size="lg" className="gradient-cta text-secondary-foreground shadow-glow-green hover:opacity-95">
-                  Browse apartments
+                  Compare room packages
                 </Button>
               </Link>
               <Link to="/signup">

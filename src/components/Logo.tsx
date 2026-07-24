@@ -2,15 +2,15 @@ import { Link } from "@tanstack/react-router";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link to="/" className="flex items-center gap-2 group">
+    <Link to="/" className="flex items-center gap-2.5 group">
       <span
-        className="grid h-9 w-9 place-items-center rounded-xl gradient-primary text-white font-bold shadow-soft group-hover:scale-105 transition-base"
-        aria-hidden
+        className={`font-display text-xl leading-none tracking-tight ${light ? "text-white" : "text-foreground"}`}
       >
-        CT
+        Cozy Tower
       </span>
-      <span className={`font-bold text-lg tracking-tight ${light ? "text-white" : "text-foreground"}`}>
-        Cozy<span className="text-secondary">Tower</span>
+      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent translate-y-px" />
+      <span className={`text-[11px] font-medium uppercase tracking-[0.18em] ${light ? "text-white/70" : "text-muted-foreground"}`}>
+        Deido
       </span>
     </Link>
   );

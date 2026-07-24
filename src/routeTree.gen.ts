@@ -22,6 +22,8 @@ import { Route as ApartmentsIndexRouteImport } from './routes/apartments.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ApartmentsSlugRouteImport } from './routes/apartments.$slug'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminSocialRouteImport } from './routes/admin.social'
+import { Route as AdminReviewsRouteImport } from './routes/admin.reviews'
 import { Route as AdminCmsRouteImport } from './routes/admin.cms'
 import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
 import { Route as AdminApartmentsRouteImport } from './routes/admin.apartments'
@@ -91,6 +93,16 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSocialRoute = AdminSocialRouteImport.update({
+  id: '/social',
+  path: '/social',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReviewsRoute = AdminReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCmsRoute = AdminCmsRouteImport.update({
   id: '/cms',
   path: '/cms',
@@ -120,6 +132,8 @@ export interface FileRoutesByFullPath {
   '/admin/apartments': typeof AdminApartmentsRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/cms': typeof AdminCmsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/social': typeof AdminSocialRoute
   '/admin/users': typeof AdminUsersRoute
   '/apartments/$slug': typeof ApartmentsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -137,6 +151,8 @@ export interface FileRoutesByTo {
   '/admin/apartments': typeof AdminApartmentsRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/cms': typeof AdminCmsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/social': typeof AdminSocialRoute
   '/admin/users': typeof AdminUsersRoute
   '/apartments/$slug': typeof ApartmentsSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -156,6 +172,8 @@ export interface FileRoutesById {
   '/admin/apartments': typeof AdminApartmentsRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/cms': typeof AdminCmsRoute
+  '/admin/reviews': typeof AdminReviewsRoute
+  '/admin/social': typeof AdminSocialRoute
   '/admin/users': typeof AdminUsersRoute
   '/apartments/$slug': typeof ApartmentsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -176,6 +194,8 @@ export interface FileRouteTypes {
     | '/admin/apartments'
     | '/admin/bookings'
     | '/admin/cms'
+    | '/admin/reviews'
+    | '/admin/social'
     | '/admin/users'
     | '/apartments/$slug'
     | '/admin/'
@@ -193,6 +213,8 @@ export interface FileRouteTypes {
     | '/admin/apartments'
     | '/admin/bookings'
     | '/admin/cms'
+    | '/admin/reviews'
+    | '/admin/social'
     | '/admin/users'
     | '/apartments/$slug'
     | '/admin'
@@ -211,6 +233,8 @@ export interface FileRouteTypes {
     | '/admin/apartments'
     | '/admin/bookings'
     | '/admin/cms'
+    | '/admin/reviews'
+    | '/admin/social'
     | '/admin/users'
     | '/apartments/$slug'
     | '/admin/'
@@ -324,6 +348,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/social': {
+      id: '/admin/social'
+      path: '/social'
+      fullPath: '/admin/social'
+      preLoaderRoute: typeof AdminSocialRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reviews': {
+      id: '/admin/reviews'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AdminReviewsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/cms': {
       id: '/admin/cms'
       path: '/cms'
@@ -352,6 +390,8 @@ interface AdminRouteChildren {
   AdminApartmentsRoute: typeof AdminApartmentsRoute
   AdminBookingsRoute: typeof AdminBookingsRoute
   AdminCmsRoute: typeof AdminCmsRoute
+  AdminReviewsRoute: typeof AdminReviewsRoute
+  AdminSocialRoute: typeof AdminSocialRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -360,6 +400,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminApartmentsRoute: AdminApartmentsRoute,
   AdminBookingsRoute: AdminBookingsRoute,
   AdminCmsRoute: AdminCmsRoute,
+  AdminReviewsRoute: AdminReviewsRoute,
+  AdminSocialRoute: AdminSocialRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
@@ -382,3 +424,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

@@ -9,9 +9,9 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Cozy Tower" },
-      { name: "description", content: "Get in touch with the Cozy Tower concierge team in Douala." },
+      { name: "description", content: "Reach the Cozy Tower concierge directly — the same team that runs the building answers." },
       { property: "og:title", content: "Contact Cozy Tower" },
-      { property: "og:description", content: "Reach out to our local Douala concierge team." },
+      { property: "og:description", content: "Talk to the people who actually run the residence." },
     ],
   }),
   component: ContactPage,
@@ -25,12 +25,13 @@ function ContactPage() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-10">
         <div>
           <p className="text-sm font-semibold text-secondary uppercase tracking-wider">Contact</p>
-          <h1 className="mt-2 text-3xl md:text-4xl font-bold">We're here, in Douala.</h1>
-          <p className="mt-4 text-foreground/80">Reach out — we usually reply within an hour.</p>
+          <h1 className="mt-2 text-3xl md:text-4xl font-display font-semibold">Talk to the people who run the building.</h1>
+          <p className="mt-4 text-foreground/80">No call center — messages go straight to the concierge on site.</p>
           <div className="mt-8 space-y-4 text-sm">
-            <div className="flex items-center gap-3"><Mail className="h-5 w-5 text-secondary" /> hello@cozytower.cm</div>
-            <div className="flex items-center gap-3"><Phone className="h-5 w-5 text-secondary" /> +237 6 99 00 00 00</div>
-            <div className="flex items-center gap-3"><MapPin className="h-5 w-5 text-secondary" /> Deido, Bonatéki, Douala, Cameroon</div>
+            <div className="flex items-center gap-3"><Mail className="h-5 w-5 text-secondary" /> towercozy@gmail.com</div>
+            <div className="flex items-center gap-3"><Phone className="h-5 w-5 text-secondary" /> +237 696 57 78 53 (WhatsApp)</div>
+            <div className="flex items-center gap-3"><Phone className="h-5 w-5 text-secondary" /> +237 679 50 60 23 (WhatsApp)</div>
+            <div className="flex items-center gap-3"><MapPin className="h-5 w-5 text-secondary" /> Douala – Deido, Bonatéki — entrée en face de l'hôtel Alvi</div>
           </div>
         </div>
         <form

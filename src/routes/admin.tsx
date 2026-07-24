@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LayoutDashboard, Building2, CalendarCheck, Users, Image as ImageIcon, ArrowLeft } from "lucide-react";
+import { LayoutDashboard, Building2, CalendarCheck, Users, Image as ImageIcon, MessageSquareQuote, Share2, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
 
@@ -30,6 +30,8 @@ function AdminLayout() {
     { to: "/admin/bookings", label: "Bookings", icon: CalendarCheck },
     { to: "/admin/users", label: "Users", icon: Users },
     { to: "/admin/cms", label: "Image CMS", icon: ImageIcon },
+    { to: "/admin/reviews", label: "Reviews", icon: MessageSquareQuote },
+    { to: "/admin/social", label: "Instagram & TikTok", icon: Share2 },
   ];
 
   return (

@@ -16,9 +16,9 @@ export const Route = createFileRoute("/apartments/")({
   head: () => ({
     meta: [
       { title: "Room packages — Cozy Tower" },
-      { name: "description", content: "Browse every room package at our single premium property in Deido, Bonatéki, Douala — from studios to 3-bedroom family suites." },
+      { name: "description", content: "Every room package in our one building in Deido, Bonatéki, Douala — from studios to 3-bedroom family suites — compared side by side." },
       { property: "og:title", content: "Room packages — Cozy Tower" },
-      { property: "og:description", content: "All room packages at Cozy Tower, Deido — Bonatéki, Douala." },
+      { property: "og:description", content: "One address, several room packages. Compare and book directly." },
     ],
   }),
   component: ListingPage,
@@ -42,7 +42,7 @@ function ListingPage() {
       setLoading(true);
       const { data } = await supabase
         .from("apartments")
-        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, amenities, apartment_images(url, is_cover, sort_order)")
+        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, bathrooms, amenities, apartment_images(url, is_cover, sort_order)")
         .order("price_per_night", { ascending: true });
       if (data) {
         setItems(
@@ -51,7 +51,7 @@ function ListingPage() {
             return {
               id: a.id, slug: a.slug, title: a.title, neighborhood: a.neighborhood,
               price_per_night: a.price_per_night, rating: Number(a.rating), review_count: a.review_count,
-              is_available: a.is_available, bedrooms: a.bedrooms,
+              is_available: a.is_available, bedrooms: a.bedrooms, bathrooms: a.bathrooms,
               cover_url: imgs[0]?.url ?? "",
               amenities: a.amenities,
             } as ApartmentCardData & { amenities: string[] };
@@ -79,8 +79,8 @@ function ListingPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="text-sm text-muted-foreground">{filtered.length} room packages · Deido, Bonatéki</p>
-            <h1 className="mt-1 text-2xl md:text-3xl font-bold">Room packages</h1>
+            <p className="text-sm text-muted-foreground">One address — Deido, Bonatéki · {filtered.length} room packages to compare</p>
+            <h1 className="mt-1 text-2xl md:text-3xl font-display font-semibold">Room packages</h1>
           </div>
           <Button variant="outline" size="sm" className="md:hidden" onClick={() => setShowFilters(!showFilters)}>
             <SlidersHorizontal className="h-4 w-4 mr-1" /> Filters

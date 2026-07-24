@@ -7,14 +7,18 @@ const SUGGESTIONS = [
   "How do I book?",
   "Cancellation policy",
   "Payment methods",
+  "Power & water?",
+  "Getting here from the airport",
   "Talk to a human",
 ];
 
 const BOT_REPLIES: Record<string, string> = {
-  "How do I book?": "Pick an apartment, choose your dates and guests, then click ‘Reserve’. You’ll be guided through a quick checkout.",
+  "How do I book?": "Pick a room package, choose your dates and guests, then click 'Reserve'. You'll be guided through a quick checkout — everything happens in this same building, so what you see is what you get.",
   "Cancellation policy": "Free cancellation within 48 hours of booking. After that, the first night is non-refundable.",
-  "Payment methods": "We accept Visa, Mastercard, and Mobile Money (MTN MoMo, Orange Money).",
-  "Talk to a human": "A host will reach you within 10 minutes via the email you used to sign up.",
+  "Payment methods": "We accept Visa, Mastercard, and Mobile Money (MTN MoMo, Orange Money) — no card required.",
+  "Power & water?": "Every room has backup power for outages and a water reserve, so a SONEL cut or a dry spell won't interrupt your stay.",
+  "Getting here from the airport": "About 25–35 minutes from Douala International Airport depending on traffic. Tell us your flight time and we'll arrange a pickup.",
+  "Talk to a human": "The concierge on site will reach you within 10 minutes via the email you used to sign up — it's the same person who'll hand you your keys.",
 };
 
 export function Chatbot() {

@@ -16,8 +16,10 @@ function AdminCms() {
   const [activeApt, setActiveApt] = useState<string>("");
   const [images, setImages] = useState<any[]>([]);
   const [siteImages, setSiteImages] = useState<any[]>([]);
+  const [flyers, setFlyers] = useState<any[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
   const heroFileRef = useRef<HTMLInputElement>(null);
+  const flyerFileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
 
   const loadApartments = async () => {
@@ -35,7 +37,11 @@ function AdminCms() {
     const { data } = await supabase.from("site_images").select("*").order("key");
     setSiteImages(data ?? []);
   };
-  useEffect(() => { loadApartments(); loadSiteImages(); }, []);
+  const loadFlyers = async () => {
+    const { data } = await supabase.from("flyers").select("*").order("sort_order");
+    setFlyers(data ?? []);
+  };
+  useEffect(() => { loadApartments(); loadSiteImages(); loadFlyers(); }, []);
   useEffect(() => { loadImages(); }, [activeApt]);
 
   const uploadApartmentImage = async (file: File) => {
@@ -77,6 +83,27 @@ function AdminCms() {
     );
     setUploading(false);
     if (error) toast.error(error.message); else { toast.success("Hero updated — refresh the homepage"); loadSiteImages(); }
+  };
+
+  const uploadFlyers = async (files: FileList) => {
+    setUploading(true);
+    for (const file of Array.from(files)) {
+      const path = `flyers/${Date.now()}-${file.name}`;
+      const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { cacheControl: "3600", upsert: false });
+      if (upErr) { toast.error(upErr.message); continue; }
+      const url = supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+      await supabase.from("flyers").insert({ storage_path: path, url, alt: file.name, sort_order: flyers.length });
+    }
+    setUploading(false);
+    toast.success("Flyers uploaded");
+    loadFlyers();
+  };
+
+  const deleteFlyer = async (flyer: any) => {
+    if (!confirm("Delete this flyer?")) return;
+    await supabase.storage.from(BUCKET).remove([flyer.storage_path]).catch(() => {});
+    const { error } = await supabase.from("flyers").delete().eq("id", flyer.id);
+    if (error) toast.error(error.message); else { toast.success("Deleted"); loadFlyers(); }
   };
 
   return (
@@ -138,6 +165,37 @@ function AdminCms() {
                       </button>
                     )}
                     <button onClick={() => deleteImage(img)} className="px-3 py-1.5 rounded-lg bg-destructive text-destructive-foreground text-xs font-semibold flex items-center gap-1">
+                      <Trash2 className="h-3.5 w-3.5" /> Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* FLYERS */}
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold mb-3">Flyers</h2>
+        <p className="text-sm text-muted-foreground mb-3">Shown in the gallery on the About page. Upload the flyer images you posted on Facebook/Instagram — you can select several at once.</p>
+        <div className="rounded-2xl bg-card border border-border shadow-soft p-5">
+          <div className="flex flex-wrap items-center gap-3 mb-5">
+            <input ref={flyerFileRef} type="file" accept="image/*" multiple hidden onChange={(e) => e.target.files && e.target.files.length > 0 && uploadFlyers(e.target.files)} />
+            <Button onClick={() => flyerFileRef.current?.click()} disabled={uploading} className="gradient-cta text-secondary-foreground">
+              <Upload className="h-4 w-4 mr-1.5" /> {uploading ? "Uploading…" : "Add flyers"}
+            </Button>
+          </div>
+
+          {flyers.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-8 text-center">No flyers yet.</p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {flyers.map((f) => (
+                <div key={f.id} className="relative group rounded-xl overflow-hidden bg-muted aspect-[4/5]">
+                  <img src={f.url} alt={f.alt ?? ""} className="h-full w-full object-cover" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-base grid place-items-center">
+                    <button onClick={() => deleteFlyer(f)} className="px-3 py-1.5 rounded-lg bg-destructive text-destructive-foreground text-xs font-semibold flex items-center gap-1">
                       <Trash2 className="h-3.5 w-3.5" /> Delete
                     </button>
                   </div>

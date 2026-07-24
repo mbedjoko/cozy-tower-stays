@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Star, MapPin } from "lucide-react";
+import { Star, BedDouble, Bath } from "lucide-react";
 import { formatXAF } from "@/lib/format";
 
 export type ApartmentCardData = {
@@ -13,6 +13,7 @@ export type ApartmentCardData = {
   is_available: boolean;
   cover_url: string;
   bedrooms: number;
+  bathrooms: number;
 };
 
 export function ApartmentCard({ apt }: { apt: ApartmentCardData }) {
@@ -53,11 +54,9 @@ export function ApartmentCard({ apt }: { apt: ApartmentCardData }) {
             <span className="text-muted-foreground">({apt.review_count})</span>
           </div>
         </div>
-        <div className="mt-1.5 flex items-center gap-1 text-sm text-muted-foreground">
-          <MapPin className="h-3.5 w-3.5" />
-          <span>{apt.neighborhood}, Douala</span>
-          <span className="mx-2">·</span>
-          <span>{apt.bedrooms} bed{apt.bedrooms > 1 ? "s" : ""}</span>
+        <div className="mt-1.5 flex items-center gap-3 text-sm text-muted-foreground">
+          <span className="flex items-center gap-1"><BedDouble className="h-3.5 w-3.5" /> {apt.bedrooms} bed{apt.bedrooms > 1 ? "s" : ""}</span>
+          <span className="flex items-center gap-1"><Bath className="h-3.5 w-3.5" /> {apt.bathrooms} bath{apt.bathrooms > 1 ? "s" : ""}</span>
         </div>
       </div>
     </Link>

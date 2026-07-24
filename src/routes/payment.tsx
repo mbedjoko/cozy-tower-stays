@@ -52,7 +52,7 @@ function PaymentPage() {
     });
     setSubmitting(false);
     if (error) { toast.error(error.message); return; }
-    toast.success("Booking confirmed! Welcome to Cozy Tower.");
+    toast.success("Booking confirmed! See you in Bonatéki.");
     navigate({ to: "/dashboard" });
   };
 
