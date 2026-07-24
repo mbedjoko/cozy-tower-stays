@@ -79,8 +79,8 @@ function ListingPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="text-sm text-muted-foreground">{filtered.length} stays in Douala</p>
-            <h1 className="mt-1 text-2xl md:text-3xl font-bold">Browse apartments</h1>
+            <p className="text-sm text-muted-foreground">{filtered.length} room packages · Deido, Bonatéki</p>
+            <h1 className="mt-1 text-2xl md:text-3xl font-bold">Room packages</h1>
           </div>
           <Button variant="outline" size="sm" className="md:hidden" onClick={() => setShowFilters(!showFilters)}>
             <SlidersHorizontal className="h-4 w-4 mr-1" /> Filters
