@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Search, MapPin, Calendar, Users, Star, Shield, Sparkles, Headphones, ArrowRight } from "lucide-react";
+import { Search, Calendar, Users, Star, Shield, Sparkles, Headphones, ArrowRight, BedDouble } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { ApartmentCard, type ApartmentCardData } from "@/components/ApartmentCard";
 import { Button } from "@/components/ui/button";
