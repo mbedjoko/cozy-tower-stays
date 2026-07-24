@@ -15,10 +15,10 @@ export const Route = createFileRoute("/apartments/")({
   }),
   head: () => ({
     meta: [
-      { title: "Browse apartments — Cozy Tower" },
-      { name: "description", content: "Browse premium short-stay apartments across Douala. Filter by price, rooms and amenities." },
-      { property: "og:title", content: "Browse apartments — Cozy Tower" },
-      { property: "og:description", content: "Premium short-stay apartments across Douala." },
+      { title: "Room packages — Cozy Tower" },
+      { name: "description", content: "Browse every room package at our single premium property in Deido, Bonatéki, Douala — from studios to 3-bedroom family suites." },
+      { property: "og:title", content: "Room packages — Cozy Tower" },
+      { property: "og:description", content: "All room packages at Cozy Tower, Deido — Bonatéki, Douala." },
     ],
   }),
   component: ListingPage,
