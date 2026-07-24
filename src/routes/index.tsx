@@ -70,7 +70,7 @@ function HomePage() {
     e.preventDefault();
     navigate({
       to: "/apartments",
-      search: { q: location, checkIn, checkOut, guests } as any,
+      search: { q: roomType, checkIn, checkOut, guests } as any,
     });
   };
 
