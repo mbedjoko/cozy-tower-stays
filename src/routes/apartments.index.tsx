@@ -31,10 +31,10 @@ function ListingPage() {
   const [items, setItems] = useState<ApartmentCardData[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [maxPrice, setMaxPrice] = useState(100000);
+  const [maxPrice, setMaxPrice] = useState(150000);
   const [minRooms, setMinRooms] = useState(0);
   const [picked, setPicked] = useState<string[]>([]);
-  const [neighborhood, setNeighborhood] = useState(search.q || "");
+  const [roomType, setRoomType] = useState(search.q || "");
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
@@ -42,7 +42,8 @@ function ListingPage() {
       setLoading(true);
       const { data } = await supabase
         .from("apartments")
-        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, amenities, apartment_images(url, is_cover, sort_order)");
+        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, amenities, apartment_images(url, is_cover, sort_order)")
+        .order("price_per_night", { ascending: true });
       if (data) {
         setItems(
           data.map((a) => {
@@ -65,11 +66,11 @@ function ListingPage() {
     return (items as (ApartmentCardData & { amenities: string[] })[]).filter((a) => {
       if (a.price_per_night > maxPrice) return false;
       if (a.bedrooms < minRooms) return false;
-      if (neighborhood && !a.neighborhood.toLowerCase().includes(neighborhood.toLowerCase())) return false;
+      if (roomType && !a.title.toLowerCase().includes(roomType.toLowerCase())) return false;
       if (picked.length && !picked.every((p) => a.amenities.includes(p))) return false;
       return true;
     });
-  }, [items, maxPrice, minRooms, picked, neighborhood]);
+  }, [items, maxPrice, minRooms, picked, roomType]);
 
   const togglePick = (a: string) => setPicked((p) => p.includes(a) ? p.filter(x => x !== a) : [...p, a]);
 
