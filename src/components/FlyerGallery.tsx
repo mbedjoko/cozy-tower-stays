@@ -31,12 +31,12 @@ export function FlyerGallery({ fallback = [] }: { fallback?: Flyer[] }) {
   return (
     <>
       <p className="text-sm font-semibold text-secondary uppercase tracking-wider mb-6 text-center">Flyers</p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
         {flyers.map((f, i) => (
           <button
             key={f.id}
             onClick={() => setActive(i)}
-            className="group relative aspect-[4/5] rounded-2xl overflow-hidden bg-muted shadow-soft hover-lift focus-ring"
+            className="group relative aspect-[4/5] w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.75rem)] lg:w-[calc(20%-0.9rem)] rounded-2xl overflow-hidden bg-muted shadow-soft hover-lift focus-ring"
           >
             <img src={f.url} alt={f.alt ?? "Flyer"} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-base" />
