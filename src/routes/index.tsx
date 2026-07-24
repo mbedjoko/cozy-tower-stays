@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Search, MapPin, Calendar, Users, Star, Shield, Sparkles, Headphones, ArrowRight } from "lucide-react";
+import { Search, Calendar, Users, Star, Shield, Sparkles, Headphones, ArrowRight, BedDouble } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { ApartmentCard, type ApartmentCardData } from "@/components/ApartmentCard";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ function HomePage() {
   const [hero, setHero] = useState<{ url: string; caption: string | null } | null>(null);
 
   // search form
-  const [location, setLocation] = useState("");
+  const [roomType, setRoomType] = useState("");
   const [checkIn, setCheckIn] = useState(todayISO(1));
   const [checkOut, setCheckOut] = useState(todayISO(3));
   const [guests, setGuests] = useState(2);
@@ -70,7 +70,7 @@ function HomePage() {
     e.preventDefault();
     navigate({
       to: "/apartments",
-      search: { q: location, checkIn, checkOut, guests } as any,
+      search: { q: roomType, checkIn, checkOut, guests } as any,
     });
   };
 
@@ -95,21 +95,26 @@ function HomePage() {
               <span className="text-accent">stay</span> in Douala.
             </h1>
             <p className="mt-5 text-lg text-white/80 max-w-xl">
-              Hand-picked apartments in the city's best neighborhoods. Book in minutes, settle in within hours.
+              A single premium residence in Deido, Bonatéki — with room packages from cozy studios to spacious 3-bedroom family suites. Book in minutes, settle in within hours.
             </p>
           </div>
 
           {/* Glassmorphism search bar */}
           <form
             onSubmit={handleSearch}
-            className="mt-10 glass-strong rounded-2xl p-2 md:p-3 shadow-elegant grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_0.9fr_auto] gap-2 md:gap-1.5"
+            className="mt-10 glass-strong rounded-2xl p-2 md:p-3 shadow-elegant grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr_0.9fr_auto] gap-2 md:gap-1.5"
           >
-            <Field icon={<MapPin className="h-4 w-4" />} label="Where">
-              <input
-                value={location} onChange={(e) => setLocation(e.target.value)}
-                placeholder="Akwa, Bonapriso…"
-                className="w-full bg-transparent text-foreground text-sm font-medium placeholder:text-muted-foreground focus:outline-none"
-              />
+            <Field icon={<BedDouble className="h-4 w-4" />} label="Room package">
+              <select
+                value={roomType} onChange={(e) => setRoomType(e.target.value)}
+                className="w-full bg-transparent text-foreground text-sm font-medium focus:outline-none"
+              >
+                <option value="">Any package</option>
+                <option value="Studio">Studio</option>
+                <option value="1-Bedroom">1-Bedroom</option>
+                <option value="2-Bedroom">2-Bedroom</option>
+                <option value="3-Bedroom">3-Bedroom</option>
+              </select>
             </Field>
             <Field icon={<Calendar className="h-4 w-4" />} label="Check-in">
               <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)}

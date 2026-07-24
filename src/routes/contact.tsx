@@ -30,7 +30,7 @@ function ContactPage() {
           <div className="mt-8 space-y-4 text-sm">
             <div className="flex items-center gap-3"><Mail className="h-5 w-5 text-secondary" /> hello@cozytower.cm</div>
             <div className="flex items-center gap-3"><Phone className="h-5 w-5 text-secondary" /> +237 6 99 00 00 00</div>
-            <div className="flex items-center gap-3"><MapPin className="h-5 w-5 text-secondary" /> Akwa, Douala, Cameroon</div>
+            <div className="flex items-center gap-3"><MapPin className="h-5 w-5 text-secondary" /> Deido, Bonatéki, Douala, Cameroon</div>
           </div>
         </div>
         <form

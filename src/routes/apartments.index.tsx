@@ -15,10 +15,10 @@ export const Route = createFileRoute("/apartments/")({
   }),
   head: () => ({
     meta: [
-      { title: "Browse apartments — Cozy Tower" },
-      { name: "description", content: "Browse premium short-stay apartments across Douala. Filter by price, rooms and amenities." },
-      { property: "og:title", content: "Browse apartments — Cozy Tower" },
-      { property: "og:description", content: "Premium short-stay apartments across Douala." },
+      { title: "Room packages — Cozy Tower" },
+      { name: "description", content: "Browse every room package at our single premium property in Deido, Bonatéki, Douala — from studios to 3-bedroom family suites." },
+      { property: "og:title", content: "Room packages — Cozy Tower" },
+      { property: "og:description", content: "All room packages at Cozy Tower, Deido — Bonatéki, Douala." },
     ],
   }),
   component: ListingPage,
@@ -31,10 +31,10 @@ function ListingPage() {
   const [items, setItems] = useState<ApartmentCardData[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [maxPrice, setMaxPrice] = useState(100000);
+  const [maxPrice, setMaxPrice] = useState(150000);
   const [minRooms, setMinRooms] = useState(0);
   const [picked, setPicked] = useState<string[]>([]);
-  const [neighborhood, setNeighborhood] = useState(search.q || "");
+  const [roomType, setRoomType] = useState(search.q || "");
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
@@ -42,7 +42,8 @@ function ListingPage() {
       setLoading(true);
       const { data } = await supabase
         .from("apartments")
-        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, amenities, apartment_images(url, is_cover, sort_order)");
+        .select("id, slug, title, neighborhood, price_per_night, rating, review_count, is_available, bedrooms, amenities, apartment_images(url, is_cover, sort_order)")
+        .order("price_per_night", { ascending: true });
       if (data) {
         setItems(
           data.map((a) => {
@@ -65,11 +66,11 @@ function ListingPage() {
     return (items as (ApartmentCardData & { amenities: string[] })[]).filter((a) => {
       if (a.price_per_night > maxPrice) return false;
       if (a.bedrooms < minRooms) return false;
-      if (neighborhood && !a.neighborhood.toLowerCase().includes(neighborhood.toLowerCase())) return false;
+      if (roomType && !a.title.toLowerCase().includes(roomType.toLowerCase())) return false;
       if (picked.length && !picked.every((p) => a.amenities.includes(p))) return false;
       return true;
     });
-  }, [items, maxPrice, minRooms, picked, neighborhood]);
+  }, [items, maxPrice, minRooms, picked, roomType]);
 
   const togglePick = (a: string) => setPicked((p) => p.includes(a) ? p.filter(x => x !== a) : [...p, a]);
 
@@ -78,8 +79,8 @@ function ListingPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="text-sm text-muted-foreground">{filtered.length} stays in Douala</p>
-            <h1 className="mt-1 text-2xl md:text-3xl font-bold">Browse apartments</h1>
+            <p className="text-sm text-muted-foreground">{filtered.length} room packages · Deido, Bonatéki</p>
+            <h1 className="mt-1 text-2xl md:text-3xl font-bold">Room packages</h1>
           </div>
           <Button variant="outline" size="sm" className="md:hidden" onClick={() => setShowFilters(!showFilters)}>
             <SlidersHorizontal className="h-4 w-4 mr-1" /> Filters
@@ -95,10 +96,15 @@ function ListingPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Neighborhood</label>
-                <input value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}
-                  placeholder="Akwa, Bonapriso…"
-                  className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Room type</label>
+                <select value={roomType} onChange={(e) => setRoomType(e.target.value)}
+                  className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                  <option value="">All packages</option>
+                  <option value="Studio">Studio</option>
+                  <option value="1-Bedroom">1-Bedroom</option>
+                  <option value="2-Bedroom">2-Bedroom</option>
+                  <option value="3-Bedroom">3-Bedroom</option>
+                </select>
               </div>
 
               <div>
@@ -139,7 +145,7 @@ function ListingPage() {
               </div>
 
               <button
-                onClick={() => { setMaxPrice(100000); setMinRooms(0); setPicked([]); setNeighborhood(""); }}
+                onClick={() => { setMaxPrice(150000); setMinRooms(0); setPicked([]); setRoomType(""); }}
                 className="w-full text-xs font-medium text-muted-foreground hover:text-foreground"
               >
                 Clear all filters

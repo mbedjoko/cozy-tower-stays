@@ -16,7 +16,7 @@ export const Route = createFileRoute("/about")({
         <p className="text-sm font-semibold text-secondary uppercase tracking-wider">Our story</p>
         <h1 className="mt-2 text-4xl md:text-5xl font-bold tracking-tight">A new standard for stays in Douala.</h1>
         <p className="mt-6 text-lg text-foreground/80 leading-relaxed">
-          Cozy Tower curates the very best short-stay apartments across Douala — from minimalist Akwa lofts to family-sized Bonamoussadi homes. Every space is hand-inspected, every host is vetted.
+          Cozy Tower is a single premium residence in Deido, Bonatéki — Douala. From cozy studios to spacious 3-bedroom family suites, every package is designed, furnished and cared for in-house so your stay feels effortless.
         </p>
         <p className="mt-4 text-foreground/80 leading-relaxed">
           We built Cozy Tower because the city deserved a booking experience as polished as its apartments. Premium, local, effortless.
