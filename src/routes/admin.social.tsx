@@ -28,7 +28,7 @@ function AdminSocial() {
 
   const load = async () => {
     setLoading(true);
-    const { data } = await supabase.from("social_posts").select("id, platform, url, sort_order").order("sort_order");
+    const { data } = await (supabase as any).from("social_posts").select("id, platform, url, sort_order").order("sort_order");
     setPosts(data ?? []);
     setLoading(false);
   };
@@ -38,7 +38,7 @@ function AdminSocial() {
     e.preventDefault();
     setSubmitting(true);
     const cleanUrl = platform === "facebook" ? extractFacebookUrl(url) : url.trim();
-    const { error } = await supabase.from("social_posts").insert({
+    const { error } = await (supabase as any).from("social_posts").insert({
       platform, url: cleanUrl, sort_order: posts.length,
     });
     setSubmitting(false);
@@ -50,7 +50,7 @@ function AdminSocial() {
 
   const remove = async (id: string) => {
     if (!confirm("Remove this post?")) return;
-    const { error } = await supabase.from("social_posts").delete().eq("id", id);
+    const { error } = await (supabase as any).from("social_posts").delete().eq("id", id);
     if (error) toast.error(error.message); else { toast.success("Removed"); load(); }
   };
 
