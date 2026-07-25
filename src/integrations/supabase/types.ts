@@ -313,57 +313,6 @@ export type Database = {
           },
         ]
       }
-      flyers: {
-        Row: {
-          alt: string | null
-          created_at: string
-          id: string
-          sort_order: number
-          storage_path: string
-          url: string
-        }
-        Insert: {
-          alt?: string | null
-          created_at?: string
-          id?: string
-          sort_order?: number
-          storage_path: string
-          url: string
-        }
-        Update: {
-          alt?: string | null
-          created_at?: string
-          id?: string
-          sort_order?: number
-          storage_path?: string
-          url?: string
-        }
-        Relationships: []
-      }
-      social_posts: {
-        Row: {
-          created_at: string
-          id: string
-          platform: string
-          sort_order: number
-          url: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          platform: string
-          sort_order?: number
-          url: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          platform?: string
-          sort_order?: number
-          url?: string
-        }
-        Relationships: []
-      }
       site_images: {
         Row: {
           alt: string | null
