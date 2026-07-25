@@ -111,8 +111,8 @@ function AboutPage() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.from("social_posts").select("id, platform, url").order("sort_order");
-      if (data && data.length > 0) setPosts([...FALLBACK_POSTS, ...data]);
+      const { data } = await (supabase as any).from("social_posts").select("id, platform, url").order("sort_order");
+      if (data && data.length > 0) setPosts([...FALLBACK_POSTS, ...(data as SocialPost[])]);
     })();
   }, []);
 
