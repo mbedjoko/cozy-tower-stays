@@ -38,7 +38,7 @@ function AdminCms() {
     setSiteImages(data ?? []);
   };
   const loadFlyers = async () => {
-    const { data } = await supabase.from("flyers").select("*").order("sort_order");
+    const { data } = await (supabase as any).from("flyers").select("*").order("sort_order");
     setFlyers(data ?? []);
   };
   useEffect(() => { loadApartments(); loadSiteImages(); loadFlyers(); }, []);
@@ -92,7 +92,7 @@ function AdminCms() {
       const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { cacheControl: "3600", upsert: false });
       if (upErr) { toast.error(upErr.message); continue; }
       const url = supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
-      await supabase.from("flyers").insert({ storage_path: path, url, alt: file.name, sort_order: flyers.length });
+      await (supabase as any).from("flyers").insert({ storage_path: path, url, alt: file.name, sort_order: flyers.length });
     }
     setUploading(false);
     toast.success("Flyers uploaded");
@@ -102,7 +102,7 @@ function AdminCms() {
   const deleteFlyer = async (flyer: any) => {
     if (!confirm("Delete this flyer?")) return;
     await supabase.storage.from(BUCKET).remove([flyer.storage_path]).catch(() => {});
-    const { error } = await supabase.from("flyers").delete().eq("id", flyer.id);
+    const { error } = await (supabase as any).from("flyers").delete().eq("id", flyer.id);
     if (error) toast.error(error.message); else { toast.success("Deleted"); loadFlyers(); }
   };
 
