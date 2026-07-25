@@ -10,8 +10,8 @@ export function FlyerGallery({ fallback = [] }: { fallback?: Flyer[] }) {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.from("flyers").select("id, url, alt").order("sort_order");
-      if (data && data.length > 0) setFlyers([...fallback, ...data]);
+      const { data } = await (supabase as any).from("flyers").select("id, url, alt").order("sort_order");
+      if (data && data.length > 0) setFlyers([...fallback, ...(data as Flyer[])]);
     })();
   }, []);
 
